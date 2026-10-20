@@ -312,49 +312,45 @@
         <!-- ==================== RESOURCES ==================== -->
         <section id="tab-resources" class="tab-content hidden space-y-6">
             <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                <h2 class="text-xl md:text-2xl font-bold text-slate-800 mb-2">📦 ทรัพยากรและชุดข้อมูลจำลองสำหรับฝึกปฏิบัติ (Sandbox Kit)</h2>
-                <p class="text-slate-600 text-sm mb-6">
-                    สำหรับอาจารย์ที่ไม่ได้เตรียมไฟล์งานของนักศึกษาหรือตารางเกณฑ์ประเมินมาในวันนี้ สามารถคัดลอกข้อมูลจำลองด้านล่างไปใช้ทดสอบในชั่วโมงที่ 4 ได้ทันทีครับ
-                </p>
-
-                <div class="grid md:grid-cols-2 gap-6">
-                    <!-- Sample Mock Student Submission -->
-                    <div class="border border-slate-200 rounded-xl p-5 bg-slate-50 flex flex-col justify-between">
-                        <div>
-                            <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2.5 py-1 rounded">ข้อมูลจำลองที่ 1</span>
-                            <h3 class="font-bold text-lg mt-2 mb-1">ตัวอย่างโครงร่างโปรเจกต์นักศึกษา (สำหรับทดสอบให้ Gem ตรวจ)</h3>
-                            <p class="text-xs text-slate-500 mb-3">กดคัดลอกข้อความนี้ แล้วนำไปวางทดสอบใน Custom Gem ที่สร้างขึ้นในชั่วโมงที่ 4</p>
-                            <pre id="sample-student-work" class="bg-white p-3 rounded border border-slate-200 text-xs text-slate-700 h-44 overflow-y-auto mb-4">ชื่อโครงงาน: การศึกษาพฤติกรรมการซื้อสินค้าออนไลน์ของนักศึกษามหาวิทยาลัย
-1. ที่มาและความสำคัญ: ปัจจุบันคนซื้อของออนไลน์เยอะมาก คณะผู้จัดทำจึงอยากรู้ว่านักศึกษาชอบซื้ออะไรและใช้แอปไหนมากที่สุด เพื่อนำข้อมูลไปใช้ประโยชน์ในการขายของต่อไป
-2. วัตถุประสงค์:
-- เพื่อศึกษาว่านักศึกษาชอบซื้อของออนไลน์หรือไม่
-- เพื่อสำรวจความพึงพอใจในการใช้แอปช้อปปิ้ง
-3. วิธีดำเนินการวิจัย: แจกแบบสอบถาม Google Forms ให้เพื่อนในคณะจำนวน 30 คน แล้วนำมาหาค่าเฉลี่ยร้อยละ
-4. ประโยชน์ที่คาดว่าจะได้รับ: ได้รู้พฤติกรรมการซื้อของออนไลน์ของนักศึกษา</pre>
+                <h2 class="text-xl md:text-2xl font-bold text-slate-800 mb-2">📦 ดาวน์โหลดทรัพยากร</h2>
+                <p class="text-slate-600 text-sm mb-6">เอกสารและสไลด์ประกอบการอบรมสำหรับผู้เข้าอบรม เลือกดาวน์โหลดไฟล์ที่ต้องการจากรายการด้านล่าง</p>
+                <ul class="divide-y divide-slate-200 border border-slate-200 rounded-xl overflow-hidden">
+                    <li class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 sm:p-5">
+                        <div class="min-w-0">
+                            <p class="font-semibold text-slate-800 break-words">01_AI_Assisted_Use_Case_Ideation.pptx</p>
+                            <p class="text-sm text-slate-500 mt-1">PPTX · 1.74 MB</p>
                         </div>
-                        <button onclick="copyPrompt('sample-student-work', this)" class="w-full bg-slate-800 hover:bg-slate-700 text-white text-sm font-medium py-2 rounded-lg transition">
-                            คัดลอกงานนักศึกษาจำลอง
-                        </button>
-                    </div>
-
-                    <!-- Use Case Blueprint Worksheet -->
-                    <div class="border border-slate-200 rounded-xl p-5 bg-slate-50 flex flex-col justify-between">
-                        <div>
-                            <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-1 rounded">ใบงานสรุปผล</span>
-                            <h3 class="font-bold text-lg mt-2 mb-1">โครงร่างการนำเสนอ Use Case ท้ายชั่วโมง (Show & Tell Pitch)</h3>
-                            <p class="text-xs text-slate-500 mb-3">โครงสร้างสรุปสั้นๆ 4 ข้อ สำหรับแชร์ไอเดียแลกเปลี่ยนเรียนรู้กับเพื่อนต่างคณะในช่วงท้ายคลาส</p>
-                            <div class="bg-white p-4 rounded border border-slate-200 text-sm text-slate-700 space-y-2 mb-4 h-44 overflow-y-auto">
-                                <p><strong>1. คณะ/รายวิชา:</strong> ....................................................</p>
-                                <p><strong>2. ปัญหาคอขวดเดิม (Pain Point):</strong> งานที่กินเวลา หรือทักษะที่นักศึกษามักทำไม่ได้คืออะไร?</p>
-                                <p><strong>3. โซลูชันที่ออกแบบในวันนี้:</strong> เลือกใช้ Role-Play, Gemini Canvas Web App, หรือ Custom Gem มาช่วยอย่างไร?</p>
-                                <p><strong>4. แผนการนำไปใช้จริง:</strong> จะนำไปทดลองใช้ในคาบเรียนหรือสัปดาห์ไหนของเทอมนี้?</p>
-                            </div>
+                        <a href="01_AI_Assisted_Use_Case_Ideation.pptx" download="01_AI_Assisted_Use_Case_Ideation.pptx" class="shrink-0 inline-flex items-center justify-center bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition" aria-label="ดาวน์โหลด 01_AI_Assisted_Use_Case_Ideation.pptx">ดาวน์โหลด</a>
+                    </li>
+                    <li class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 sm:p-5">
+                        <div class="min-w-0">
+                            <p class="font-semibold text-slate-800 break-words">02_AI_as_a_Simulator.pptx</p>
+                            <p class="text-sm text-slate-500 mt-1">PPTX · 1.54 MB</p>
                         </div>
-                        <a href="https://notebooklm.google.com" target="_blank" class="w-full text-center bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium py-2 rounded-lg transition block">
-                            🔗 เปิดใช้งาน Google NotebookLM (เสริม)
-                        </a>
-                    </div>
-                </div>
+                        <a href="02_AI_as_a_Simulator.pptx" download="02_AI_as_a_Simulator.pptx" class="shrink-0 inline-flex items-center justify-center bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition" aria-label="ดาวน์โหลด 02_AI_as_a_Simulator.pptx">ดาวน์โหลด</a>
+                    </li>
+                    <li class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 sm:p-5">
+                        <div class="min-w-0">
+                            <p class="font-semibold text-slate-800 break-words">03_Prototyping_with_Gemini_Canvas.pptx</p>
+                            <p class="text-sm text-slate-500 mt-1">PPTX · 4.01 MB</p>
+                        </div>
+                        <a href="03_Prototyping_with_Gemini_Canvas.pptx" download="03_Prototyping_with_Gemini_Canvas.pptx" class="shrink-0 inline-flex items-center justify-center bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition" aria-label="ดาวน์โหลด 03_Prototyping_with_Gemini_Canvas.pptx">ดาวน์โหลด</a>
+                    </li>
+                    <li class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 sm:p-5">
+                        <div class="min-w-0">
+                            <p class="font-semibold text-slate-800 break-words">04_Custom Gems.pptx</p>
+                            <p class="text-sm text-slate-500 mt-1">PPTX · 880.28 KB</p>
+                        </div>
+                        <a href="04_Custom%20Gems.pptx" download="04_Custom Gems.pptx" class="shrink-0 inline-flex items-center justify-center bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition" aria-label="ดาวน์โหลด 04_Custom Gems.pptx">ดาวน์โหลด</a>
+                    </li>
+                    <li class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 sm:p-5">
+                        <div class="min-w-0">
+                            <p class="font-semibold text-slate-800 break-words">Example_Project_Proposal_Educational_Technology_TH.docx</p>
+                            <p class="text-sm text-slate-500 mt-1">DOCX · 47.59 KB</p>
+                        </div>
+                        <a href="Example_Project_Proposal_Educational_Technology_TH.docx" download="Example_Project_Proposal_Educational_Technology_TH.docx" class="shrink-0 inline-flex items-center justify-center bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition" aria-label="ดาวน์โหลด Example_Project_Proposal_Educational_Technology_TH.docx">ดาวน์โหลด</a>
+                    </li>
+                </ul>
             </div>
         </section>
 
