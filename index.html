@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Use Case Design Workshop | คู่มือและรวม Prompt สำหรับอาจารย์มหาวิทยาลัย</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Sarabun', sans-serif; }
+        .tab-active {
+            border-bottom: 3px solid #2563eb;
+            color: #1d4ed8;
+            font-weight: 600;
+            background-color: #eff6ff;
+        }
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Header / Hero Section -->
+    <header class="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white shadow-lg">
+        <div class="max-w-6xl mx-auto px-4 py-8 md:py-10">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <span class="inline-block bg-blue-500/20 border border-blue-400/30 text-blue-200 text-xs font-semibold px-3 py-1 rounded-full mb-3">
+                        Hands-on Workshop (4 ชั่วโมง)
+                    </span>
+                    <h1 class="text-2xl md:text-4xl font-bold tracking-tight mb-2">
+                        การออกแบบ Use Case การใช้ Gemini สำหรับอาจารย์มหาวิทยาลัย
+                    </h1>
+                    <p class="text-slate-300 text-sm md:text-base max-w-3xl">
+                        เปลี่ยนจาก "ผู้ใช้ AI ทำสื่อพื้นฐาน" สู่ "ผู้ออกแบบนวัตกรรมการเรียนรู้และระบบงานเฉพาะศาสตร์" (Domain-Specific AI Solution Lab)
+                    </p>
+                </div>
+                <div class="flex gap-2 shrink-0">
+                    <a href="https://gemini.google.com" target="_blank" class="bg-white text-blue-900 hover:bg-blue-50 font-semibold px-4 py-2.5 rounded-lg shadow text-sm flex items-center gap-2 transition">
+                        <span>✨ เปิดใช้งาน Gemini</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-20 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex overflow-x-auto no-scrollbar" id="tab-buttons">
+                <button onclick="switchTab('hour1')" id="btn-hour1" class="tab-btn tab-active px-5 py-4 text-sm md:text-base whitespace-nowrap transition hover:bg-slate-50">
+                    ชั่วโมงที่ 1: Ideation & Blueprint
+                </button>
+                <button onclick="switchTab('hour2')" id="btn-hour2" class="tab-btn px-5 py-4 text-sm md:text-base whitespace-nowrap text-slate-600 transition hover:bg-slate-50">
+                    ชั่วโมงที่ 2: Role-Play & Socratic
+                </button>
+                <button onclick="switchTab('hour3')" id="btn-hour3" class="tab-btn px-5 py-4 text-sm md:text-base whitespace-nowrap text-slate-600 transition hover:bg-slate-50">
+                    ชั่วโมงที่ 3: Gemini Canvas (Web App)
+                </button>
+                <button onclick="switchTab('hour4')" id="btn-hour4" class="tab-btn px-5 py-4 text-sm md:text-base whitespace-nowrap text-slate-600 transition hover:bg-slate-50">
+                    ชั่วโมงที่ 4: Custom Gems & QA
+                </button>
+                <button onclick="switchTab('resources')" id="btn-resources" class="tab-btn px-5 py-4 text-sm md:text-base whitespace-nowrap text-slate-600 transition hover:bg-slate-50">
+                    📦 ไฟล์ตัวอย่าง & ทรัพยากร
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-grow w-full">
+
+        <!-- Instruction Banner -->
+        <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg mb-8 flex items-start gap-3">
+            <span class="text-xl">💡</span>
+            <div class="text-sm text-amber-900">
+                <strong>วิธีใช้งานสำหรับผู้เข้าอบรม:</strong> กดปุ่ม <strong>"คัดลอก Prompt"</strong> ในแต่ละกิจกรรม แล้วนำไปวางในหน้าต่างแชทของ Gemini จากนั้นแก้ไขข้อความในวงเล็บ <code class="bg-amber-200/60 px-1.5 py-0.5 rounded font-mono text-amber-950">[...]</code> ให้ตรงกับรายวิชาและคณะของท่าน
+            </div>
+        </div>
+
+        <!-- ==================== HOUR 1 ==================== -->
+        <section id="tab-hour1" class="tab-content space-y-6">
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-blue-600">Module 1 (นาทีที่ 00:00 - 01:00)</span>
+                        <h2 class="text-xl md:text-2xl font-bold text-slate-800 mt-1">AI-Assisted Use Case Ideation: สกัดปัญหาสู่พิมพ์เขียวเฉพาะศาสตร์</h2>
+                    </div>
+                    <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full">Meta-Prompting</span>
+                </div>
+                <p class="text-slate-600 text-sm mb-6">
+                    ใช้ Gemini เป็นที่ปรึกษาวิเคราะห์ปัญหาคอขวดในการสอนทักษะปฏิบัติหรือการคิดวิเคราะห์ในสาขาวิชาของตนเอง เพื่อสร้างตารางพิมพ์เขียว Use Case (Use Case Blueprint)
+                </p>
+
+                <!-- Prompt Box 1.1 -->
+                <div class="bg-slate-900 rounded-xl overflow-hidden mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex justify-between items-center border-b border-slate-700">
+                        <span class="text-slate-200 text-sm font-medium">📋 Prompt 1.1: วิเคราะห์และออกแบบ 5 Use Cases ประจำวิชา</span>
+                        <button onclick="copyPrompt('prompt-1-1', this)" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-3 py-1.5 rounded-md transition flex items-center gap-1.5">
+                            <span>คัดลอก Prompt</span>
+                        </button>
+                    </div>
+                    <pre id="prompt-1-1" class="p-4 text-slate-100 text-sm leading-relaxed font-mono">คุณคือผู้เชี่ยวชาญด้านการออกแบบนวัตกรรมการศึกษาและ AI Use Case ในระดับอุดมศึกษา
+ฉันสอนในคณะ [ระบุคณะ] สาขา [ระบุสาขา] รับผิดชอบวิชา [ระบุชื่อวิชาและชั้นปี]
+ตอนนี้ฉันใช้ AI ทำแผนการสอน สไลด์ และออกข้อสอบเป็นแล้ว แต่อยากออกแบบ Use Case ใหม่ๆ ที่ลึกกว่าเดิม เพื่อแก้ปัญหาหลักในวิชานี้คือ: [ระบุปัญหา เช่น นักศึกษาขาดทักษะการคิดวิเคราะห์หน้างาน / ไม่กล้าซักถาม / ทำแล็บหรือปฏิบัติงานจริงแล้วยังจับต้นชนปลายไม่ถูก]
+
+ช่วยวิเคราะห์และออกแบบ 5 Use Cases ในการนำ Gemini มาใช้ในวิชานี้ โดยแบ่งเป็น:
+- 2 Use Cases สำหรับให้นักศึกษาใช้ฝึกทักษะด้วยตนเอง (AI as a Learning Partner)
+- 2 Use Cases สำหรับสร้างสื่อจำลองแบบโต้ตอบในชั้นเรียน (Interactive Simulation)
+- 1 Use Case สำหรับช่วยอาจารย์ประเมินผลหรือตรวจงานเชิงลึก (AI as an Evaluator)
+
+แสดงผลเป็นตารางที่มีคอลัมน์ดังนี้: 
+1. ชื่อ Use Case 
+2. ปัญหาที่เข้าไปแก้ (Pain Point) 
+3. บทบาทของ Gemini 
+4. ขั้นตอนการใช้งานจริง 
+5. ผลลัพธ์ที่จะเกิดขึ้นกับผู้เรียน/อาจารย์</pre>
+                </div>
+
+                <!-- Prompt Box 1.2 -->
+                <div class="bg-slate-900 rounded-xl overflow-hidden">
+                    <div class="bg-slate-800 px-4 py-3 flex justify-between items-center border-b border-slate-700">
+                        <span class="text-slate-200 text-sm font-medium">📋 Prompt 1.2 (เสริม): เจาะลึก 1 Use Case สู่แผนปฏิบัติการ (Use Case Canvas)</span>
+                        <button onclick="copyPrompt('prompt-1-2', this)" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-3 py-1.5 rounded-md transition flex items-center gap-1.5">
+                            <span>คัดลอก Prompt</span>
+                        </button>
+                    </div>
+                    <pre id="prompt-1-2" class="p-4 text-slate-100 text-sm leading-relaxed font-mono">จากตารางข้างต้น ฉันสนใจ Use Case เรื่อง "[ระบุชื่อ Use Case ที่ชอบจากตาราง]" มากที่สุด
+ช่วยขยายความ Use Case นี้ออกมาเป็น "พิมพ์เขียวพร้อมใช้งาน (Use Case Blueprint)" โดยมีรายละเอียดดังนี้:
+1. วัตถุประสงค์การเรียนรู้ที่วัดผลได้
+2. สิ่งที่อาจารย์ต้องเตรียมล่วงหน้า (Input Data / เอกสารอ้างอิง)
+3. ลำดับขั้นตอนกิจกรรมสำหรับนักศึกษา (Step-by-step Workflow)
+4. ข้อควรระวังเรื่องความถูกต้องของข้อมูล (AI Hallucination) และแนวทางป้องกันในวิชานี้</pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== HOUR 2 ==================== -->
+        <section id="tab-hour2" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-indigo-600">Module 2 (นาทีที่ 01:00 - 02:00)</span>
+                        <h2 class="text-xl md:text-2xl font-bold text-slate-800 mt-1">AI as a Simulator & Socratic Coach: คู่ซ้อมจำลองสถานการณ์</h2>
+                    </div>
+                    <span class="bg-indigo-100 text-indigo-800 text-xs font-semibold px-3 py-1 rounded-full">Role-Play & Tutoring</span>
+                </div>
+                <p class="text-slate-600 text-sm mb-6">
+                    ออกแบบชุดคำสั่งล็อกบทบาท (System Prompt) เพื่อส่งให้นักศึกษานำไปรันใน Gemini สำหรับฝึกซักประวัติ ฝึกเจรจา ฝึกจัดการชั้นเรียน หรือฝึกแก้โจทย์โดยที่ AI ไม่เฉลยคำตอบให้ก่อน
+                </p>
+
+                <!-- Prompt Box 2.1 -->
+                <div class="bg-slate-900 rounded-xl overflow-hidden mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex justify-between items-center border-b border-slate-700">
+                        <span class="text-slate-200 text-sm font-medium">📋 Prompt 2.1: ให้ AI ช่วยร่าง "ชุดคำสั่งจำลองสถานการณ์" สำหรับแจกนักศึกษา</span>
+                        <button onclick="copyPrompt('prompt-2-1', this)" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-3 py-1.5 rounded-md transition">
+                            คัดลอก Prompt
+                        </button>
+                    </div>
+                    <pre id="prompt-2-1" class="p-4 text-slate-100 text-sm leading-relaxed font-mono">ฉันต้องการออกแบบกิจกรรม Role-Play ในวิชา [ระบุวิชา] เรื่อง [ระบุหัวข้อที่ต้องการฝึก]
+ช่วยเขียน "ชุดคำสั่งตั้งต้น (Prompt สำหรับแจกนักศึกษา)" เพื่อให้ฉันก๊อปปี้ไปให้นักศึกษารันใน Gemini ของพวกเขา โดยมีเงื่อนไขในการออกแบบดังนี้:
+1. กำหนดให้ Gemini สวมบทบาทเป็น [ระบุตัวละคร เช่น ผู้ป่วยที่มีอาการซับซ้อน / ลูกความที่มีข้อพิพาท / นักเรียนที่มีพฤติกรรมต่อต้านในชั้นเรียน / ลูกค้าที่กำลังร้องเรียน]
+2. กำหนดกติกาเหล็กว่า: Gemini ต้องโต้ตอบทีละประเด็นสั้นๆ สมจริงตามธรรมชาติของมนุษย์ ห้ามบอกเฉลยหรือสรุปแนวทางแก้ปัญหาให้ก่อนเด็ดขาด ต้องรอให้นักศึกษาซักถามหรือเสนอวิธีแก้ปัญหาทีละขั้น
+3. กำหนดเงื่อนไขการจบสถานการณ์: เมื่อโต้ตอบครบ [6] ครั้ง หรือเมื่อนักศึกษาแก้ปัญหาได้ตรงจุด ให้พิมพ์คำว่า "จบการจำลอง" เพื่อออกจากบทบาท แล้วสรุปประเมินผลการฝึกของนักศึกษาเป็นข้อๆ (จุดที่ทำได้ดี, จุดที่พลาด, และคำแนะนำตามหลักวิชาการ)</pre>
+                </div>
+
+                <!-- Prompt Box 2.2 -->
+                <div class="bg-slate-900 rounded-xl overflow-hidden">
+                    <div class="bg-slate-800 px-4 py-3 flex justify-between items-center border-b border-slate-700">
+                        <span class="text-slate-200 text-sm font-medium">📋 Prompt 2.2: แม่แบบ Socratic Tutor (โค้ชถามย้อนกระตุ้นคิด สายวิทย์/วิศวะ/คำนวณ)</span>
+                        <button onclick="copyPrompt('prompt-2-2', this)" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-3 py-1.5 rounded-md transition">
+                            คัดลอก Prompt
+                        </button>
+                    </div>
+                    <pre id="prompt-2-2" class="p-4 text-slate-100 text-sm leading-relaxed font-mono">คุณคือ "Socratic Coach" ประจำวิชา [ระบุวิชา เช่น การเขียนโปรแกรม / สถิติ / เคมี / กลศาสตร์]
+ฉันเป็นนักศึกษาที่กำลังทำโจทย์หรือการทดลองเรื่อง [ระบุหัวข้อ] แล้วติดปัญหาคือ [วางโจทย์ / โค้ดที่พัง / ผลการทดลองที่ผิดพลาด]
+
+กฎเหล็กของคุณคือ:
+1. ห้ามเขียนโค้ดที่ถูกต้องสมบูรณ์ หรือห้ามเฉลยคำตอบสุดท้ายให้ฉันเด็ดขาด
+2. ให้วิเคราะห์จุดที่ฉันเข้าใจผิด แล้วตั้งคำถามชี้นำทีละ 1 คำถาม เพื่อให้ฉันสังเกตเห็นจุดบกพร่องด้วยตัวเอง
+3. เมื่อฉันตอบคำถามของคุณแล้ว จึงค่อยให้คำใบ้ถัดไป จนกว่าฉันจะแก้ปัญหาได้สำเร็จด้วยตัวเอง</pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== HOUR 3 ==================== -->
+        <section id="tab-hour3" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-emerald-600">Module 3 (นาทีที่ 02:00 - 03:00)</span>
+                        <h2 class="text-xl md:text-2xl font-bold text-slate-800 mt-1">Rapid Prototyping with Gemini Canvas: สร้างเว็บแอปและแล็บจำลอง</h2>
+                    </div>
+                    <span class="bg-emerald-100 text-emerald-800 text-xs font-semibold px-3 py-1 rounded-full">Interactive Web App</span>
+                </div>
+                <p class="text-slate-600 text-sm mb-6">
+                    เปลี่ยนไอเดียเป็นนวัตกรรมสื่อการสอนแบบโต้ตอบ (Single-file HTML/JS Web Application) ด้วยโหมด Gemini Canvas โดยไม่ต้องเขียนโค้ดเอง
+                </p>
+
+                <!-- Prompt Box 3.1 -->
+                <div class="bg-slate-900 rounded-xl overflow-hidden mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex justify-between items-center border-b border-slate-700">
+                        <span class="text-slate-200 text-sm font-medium">📋 Prompt 3.1 (สายวิทย์/วิศวะ/เทคโนฯ): สร้าง Virtual Lab & Simulator ปรับค่าตัวแปร</span>
+                        <button onclick="copyPrompt('prompt-3-1', this)" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-3 py-1.5 rounded-md transition">
+                            คัดลอก Prompt
+                        </button>
+                    </div>
+                    <pre id="prompt-3-1" class="p-4 text-slate-100 text-sm leading-relaxed font-mono">ช่วยเปิดโหมด Canvas และเขียนโค้ด HTML, CSS (Tailwind) และ JavaScript แบบรวมในไฟล์เดียว (Single-file Web Application) สำหรับเป็น "ห้องทดลองเสมือนจริง (Interactive Virtual Simulator)" ในวิชา [ระบุวิชา] เรื่อง [ระบุหัวข้อ เช่น การเคลื่อนที่แบบโปรเจกไทล์ / ความสัมพันธ์ของอุปสงค์-อุปทาน / การคำนวณขนาดกลุ่มตัวอย่าง]
+
+ฟีเจอร์ที่ต้องการ:
+1. มีแผงควบคุม (Control Panel) ที่มีแถบเลื่อน (Sliders) สำหรับปรับค่าตัวแปร [ระบุตัวแปร 2-3 ตัว]
+2. มีหน้าจอแสดงผลแบบกราฟิก (ใช้ HTML5 Canvas หรือ SVG) ที่เปลี่ยนแปลงแบบ Real-time ทันทีที่เลื่อนปรับค่าตัวแปร
+3. มีกล่องแสดงสูตรคำนวณและค่าผลลัพธ์ปัจจุบัน พร้อมคำอธิบายปรากฏการณ์ที่เกิดขึ้นเป็นภาษาไทยเข้าใจง่าย
+4. มีปุ่ม "โจทย์ท้าทาย (Challenge Mission)" สุ่มเป้าหมายให้นักศึกษาลองปรับค่าตัวแปรให้ได้ผลลัพธ์ตามที่กำหนด พร้อมตรวจคำตอบอัตโนมัติ</pre>
+                </div>
+
+                <!-- Prompt Box 3.2 -->
+                <div class="bg-slate-900 rounded-xl overflow-hidden mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex justify-between items-center border-b border-slate-700">
+                        <span class="text-slate-200 text-sm font-medium">📋 Prompt 3.2 (สายสังคม/บริหาร/สุขภาพ/ศึกษาศาสตร์): สร้างเกมจำลองการตัดสินใจ (Branching Scenario)</span>
+                        <button onclick="copyPrompt('prompt-3-2', this)" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-3 py-1.5 rounded-md transition">
+                            คัดลอก Prompt
+                        </button>
+                    </div>
+                    <pre id="prompt-3-2" class="p-4 text-slate-100 text-sm leading-relaxed font-mono">ช่วยเปิดโหมด Canvas และเขียนโค้ด HTML, CSS และ JavaScript แบบรวมในไฟล์เดียว เพื่อสร้าง "เกมจำลองสถานการณ์ตัดสินใจ (Interactive Branching Scenario Game)" สำหรับนักศึกษาวิชา [ระบุวิชา] เรื่อง [ระบุสถานการณ์ เช่น การคัดกรองผู้ป่วยฉุกเฉิน / การจัดการวิกฤตองค์กร / การแก้ปัญหาชั้นเรียน]
+
+ฟีเจอร์ที่ต้องการ:
+1. แบ่งสถานการณ์ออกเป็น 4 ด่านต่อเนื่องกัน โดยแต่ละด่านมีเนื้อเรื่องจำลองและตัวเลือกการตัดสินใจ 3 ทางเลือก
+2. มีแถบสถานะด้านบน 3 ค่า ได้แก่ [ระบุค่าพลัง เช่น ความพึงพอใจ / ความปลอดภัย / งบประมาณคงเหลือ] ซึ่งจะเพิ่มขึ้นหรือลดลงตามการตัดสินใจในแต่ละด่าน
+3. เมื่อกดเลือกคำตอบในแต่ละด่าน ให้แสดง Popup อธิบายเหตุผลทางวิชาการทันทีว่าทำไมตัวเลือกนั้นจึงดีหรือมีข้อควรระวังอย่างไร
+4. ด่านสุดท้ายให้สรุปคะแนนรวม จัดระดับเกรดการตัดสินใจ และให้คำแนะนำภาพรวมเป็นภาษาไทย ดีไซน์หน้าเว็บให้สวยงามทันสมัย</pre>
+                </div>
+
+                <!-- Prompt Box 3.3 -->
+                <div class="bg-slate-900 rounded-xl overflow-hidden">
+                    <div class="bg-slate-800 px-4 py-3 flex justify-between items-center border-b border-slate-700">
+                        <span class="text-slate-200 text-sm font-medium">📋 Prompt 3.3 (ใช้ได้ทุกคณะ): บอร์ดกิจกรรมจัดหมวดหมู่และเรียงลำดับขั้นตอน</span>
+                        <button onclick="copyPrompt('prompt-3-3', this)" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-3 py-1.5 rounded-md transition">
+                            คัดลอก Prompt
+                        </button>
+                    </div>
+                    <pre id="prompt-3-3" class="p-4 text-slate-100 text-sm leading-relaxed font-mono">ช่วยเปิดโหมด Canvas สร้างเว็บแอปพลิเคชันแบบฝึกหัดโต้ตอบ (Interactive Sorting & Categorization Board) แบบไฟล์เดียวจบ สำหรับวิชา [ระบุวิชา] เรื่อง [ระบุหัวข้อ]
+โดยมีบัตรคำหรือสถานการณ์ย่อยจำนวน 10 รายการ ให้นักศึกษาคลิกจัดเข้าหมวดหมู่ [ระบุ 3-4 หมวดหมู่] ให้ถูกต้อง มีระบบนับเวลา มีปุ่มกดตรวจคำตอบที่ไฮไลต์สีเขียว/แดง พร้อมคำอธิบายเหตุผลของแต่ละข้ออย่างละเอียด และมีปุ่มสุ่มโจทย์ใหม่</pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== HOUR 4 ==================== -->
+        <section id="tab-hour4" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-purple-600">Module 4 (นาทีที่ 03:00 - 04:00)</span>
+                        <h2 class="text-xl md:text-2xl font-bold text-slate-800 mt-1">Custom Gems & Academic QA: สร้างผู้ช่วย AI ประจำวิชาและหลักสูตร</h2>
+                    </div>
+                    <span class="bg-purple-100 text-purple-800 text-xs font-semibold px-3 py-1 rounded-full">System Instructions</span>
+                </div>
+                <p class="text-slate-600 text-sm mb-6">
+                    นำคำสั่งด้านล่างไปวางในช่อง <strong>Instructions</strong> ของเมนู <strong>Gem Manager (สร้าง Gem ใหม่)</strong> เพื่อสร้างผู้ช่วยตรวจประเมินงานแบบ 360 องศา หรือผู้ช่วยตรวจสอบมาตรฐานหลักสูตรถาวร
+                </p>
+
+                <!-- Prompt Box 4.1 -->
+                <div class="bg-slate-900 rounded-xl overflow-hidden mb-6">
+                    <div class="bg-slate-800 px-4 py-3 flex justify-between items-center border-b border-slate-700">
+                        <span class="text-slate-200 text-sm font-medium">📋 Gem Template 4.1: ผู้ช่วยประเมินงานและนิเทศแบบ 360 องศา (360° Evaluator Gem)</span>
+                        <button onclick="copyPrompt('prompt-4-1', this)" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-3 py-1.5 rounded-md transition">
+                            คัดลอก Instructions
+                        </button>
+                    </div>
+                    <pre id="prompt-4-1" class="p-4 text-slate-100 text-sm leading-relaxed font-mono">[บทบาทและเป้าหมาย]
+คุณคือ "ผู้ช่วยประเมินและให้ข้อมูลย้อนกลับเชิงสร้างสรรค์แบบ 360 องศา" ประจำวิชา [ระบุชื่อวิชา] คณะ [ระบุคณะ] หน้าที่ของคุณคือช่วยอาจารย์วิเคราะห์ไฟล์รายงาน แผนการสอน หรือโครงร่างโปรเจกต์ของนักศึกษาอย่างละเอียดตามเกณฑ์มาตรฐาน
+
+[เกณฑ์การประเมินอ้างอิง (Rubric Criteria)]
+ให้ยึดเกณฑ์ต่อไปนี้ในการตรวจทุกครั้ง:
+1. ความถูกต้องและลึกซึ้งของเนื้อหาวิชาการ (40 คะแนน)
+2. การคิดวิเคราะห์และการนำไปประยุกต์ใช้จริง (30 คะแนน)
+3. โครงสร้างการนำเสนอ ความชัดเจน และการใช้ภาษาทางวิชาการ (30 คะแนน)
+(หมายเหตุ: อาจารย์สามารถวางตาราง Rubric เฉพาะของวิชาแทนที่ตรงนี้ได้)
+
+[ขั้นตอนการทำงานเมื่อได้รับไฟล์หรือข้อความ]
+เมื่อฉันอัปโหลดงานของนักศึกษาเข้ามา ให้คุณวิเคราะห์และแสดงผลลัพธ์ตามโครงสร้างนี้เสมอ:
+1. สรุปภาพรวมของผลงาน (Executive Summary)
+2. ตารางประเมินคะแนนแยกตามเกณฑ์ พร้อมยกข้อความหรือหลักฐานจากในไฟล์ของนักศึกษามายืนยันเหตุผลของการให้คะแนน
+3. จุดแข็งที่โดดเด่น (Strengths) 3 ประเด็น
+4. จุดที่ควรปรับปรุงพร้อมตัวอย่างการแก้ไขที่เป็นรูปธรรม (Actionable Improvements) 3 ประเด็น
+5. ร่างข้อความ Feedback น้ำเสียงให้กำลังใจแบบ Growth Mindset สำหรับให้อาจารย์ก๊อปปี้ไปส่งให้นักศึกษา</pre>
+                </div>
+
+                <!-- Prompt Box 4.2 -->
+                <div class="bg-slate-900 rounded-xl overflow-hidden">
+                    <div class="bg-slate-800 px-4 py-3 flex justify-between items-center border-b border-slate-700">
+                        <span class="text-slate-200 text-sm font-medium">📋 Gem Template 4.2: ผู้ช่วยตรวจสอบความสอดคล้องของหลักสูตรและประกันคุณภาพ (OBE & QA Alignment Gem)</span>
+                        <button onclick="copyPrompt('prompt-4-2', this)" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-3 py-1.5 rounded-md transition">
+                            คัดลอก Instructions
+                        </button>
+                    </div>
+                    <pre id="prompt-4-2" class="p-4 text-slate-100 text-sm leading-relaxed font-mono">[บทบาทและเป้าหมาย]
+คุณคือผู้เชี่ยวชาญด้านการประกันคุณภาพการศึกษาระดับอุดมศึกษา (OBE, AUN-QA และเกณฑ์มาตรฐานหลักสูตร) ประจำคณะ [ระบุคณะ]
+
+[หน้าที่หลัก]
+เมื่ออาจารย์ส่งข้อมูล "ผลลัพธ์การเรียนรู้ระดับรายวิชา (CLOs)" หรือ "ข้อสอบ/กิจกรรมการเรียนรู้" เข้ามา ให้คุณช่วยตรวจสอบ Constructive Alignment ดังนี้:
+1. วิเคราะห์ระดับพฤติกรรมการเรียนรู้ตามหลัก Bloom's Taxonomy (Revised)
+2. ตรวจสอบว่ากิจกรรมการสอนและการวัดผลที่อาจารย์ออกแบบ สอดคล้องกับ Verb ของ CLO ที่ตั้งไว้หรือไม่
+3. หากพบจุดที่ไม่สอดคล้อง ให้เสนอแนะแนวทางการปรับแก้คำอธิบาย CLO หรือปรับรูปแบบการประเมินผลให้ตรงตามมาตรฐาน OBE ทันทีในรูปแบบตารางเปรียบเทียบ (Before & After)</pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== RESOURCES ==================== -->
+        <section id="tab-resources" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-xl md:text-2xl font-bold text-slate-800 mb-2">📦 ทรัพยากรและชุดข้อมูลจำลองสำหรับฝึกปฏิบัติ (Sandbox Kit)</h2>
+                <p class="text-slate-600 text-sm mb-6">
+                    สำหรับอาจารย์ที่ไม่ได้เตรียมไฟล์งานของนักศึกษาหรือตารางเกณฑ์ประเมินมาในวันนี้ สามารถคัดลอกข้อมูลจำลองด้านล่างไปใช้ทดสอบในชั่วโมงที่ 4 ได้ทันทีครับ
+                </p>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Sample Mock Student Submission -->
+                    <div class="border border-slate-200 rounded-xl p-5 bg-slate-50 flex flex-col justify-between">
+                        <div>
+                            <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2.5 py-1 rounded">ข้อมูลจำลองที่ 1</span>
+                            <h3 class="font-bold text-lg mt-2 mb-1">ตัวอย่างโครงร่างโปรเจกต์นักศึกษา (สำหรับทดสอบให้ Gem ตรวจ)</h3>
+                            <p class="text-xs text-slate-500 mb-3">กดคัดลอกข้อความนี้ แล้วนำไปวางทดสอบใน Custom Gem ที่สร้างขึ้นในชั่วโมงที่ 4</p>
+                            <pre id="sample-student-work" class="bg-white p-3 rounded border border-slate-200 text-xs text-slate-700 h-44 overflow-y-auto mb-4">ชื่อโครงงาน: การศึกษาพฤติกรรมการซื้อสินค้าออนไลน์ของนักศึกษามหาวิทยาลัย
+1. ที่มาและความสำคัญ: ปัจจุบันคนซื้อของออนไลน์เยอะมาก คณะผู้จัดทำจึงอยากรู้ว่านักศึกษาชอบซื้ออะไรและใช้แอปไหนมากที่สุด เพื่อนำข้อมูลไปใช้ประโยชน์ในการขายของต่อไป
+2. วัตถุประสงค์:
+- เพื่อศึกษาว่านักศึกษาชอบซื้อของออนไลน์หรือไม่
+- เพื่อสำรวจความพึงพอใจในการใช้แอปช้อปปิ้ง
+3. วิธีดำเนินการวิจัย: แจกแบบสอบถาม Google Forms ให้เพื่อนในคณะจำนวน 30 คน แล้วนำมาหาค่าเฉลี่ยร้อยละ
+4. ประโยชน์ที่คาดว่าจะได้รับ: ได้รู้พฤติกรรมการซื้อของออนไลน์ของนักศึกษา</pre>
+                        </div>
+                        <button onclick="copyPrompt('sample-student-work', this)" class="w-full bg-slate-800 hover:bg-slate-700 text-white text-sm font-medium py-2 rounded-lg transition">
+                            คัดลอกงานนักศึกษาจำลอง
+                        </button>
+                    </div>
+
+                    <!-- Use Case Blueprint Worksheet -->
+                    <div class="border border-slate-200 rounded-xl p-5 bg-slate-50 flex flex-col justify-between">
+                        <div>
+                            <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-1 rounded">ใบงานสรุปผล</span>
+                            <h3 class="font-bold text-lg mt-2 mb-1">โครงร่างการนำเสนอ Use Case ท้ายชั่วโมง (Show & Tell Pitch)</h3>
+                            <p class="text-xs text-slate-500 mb-3">โครงสร้างสรุปสั้นๆ 4 ข้อ สำหรับแชร์ไอเดียแลกเปลี่ยนเรียนรู้กับเพื่อนต่างคณะในช่วงท้ายคลาส</p>
+                            <div class="bg-white p-4 rounded border border-slate-200 text-sm text-slate-700 space-y-2 mb-4 h-44 overflow-y-auto">
+                                <p><strong>1. คณะ/รายวิชา:</strong> ....................................................</p>
+                                <p><strong>2. ปัญหาคอขวดเดิม (Pain Point):</strong> งานที่กินเวลา หรือทักษะที่นักศึกษามักทำไม่ได้คืออะไร?</p>
+                                <p><strong>3. โซลูชันที่ออกแบบในวันนี้:</strong> เลือกใช้ Role-Play, Gemini Canvas Web App, หรือ Custom Gem มาช่วยอย่างไร?</p>
+                                <p><strong>4. แผนการนำไปใช้จริง:</strong> จะนำไปทดลองใช้ในคาบเรียนหรือสัปดาห์ไหนของเทอมนี้?</p>
+                            </div>
+                        </div>
+                        <a href="https://notebooklm.google.com" target="_blank" class="w-full text-center bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium py-2 rounded-lg transition block">
+                            🔗 เปิดใช้งาน Google NotebookLM (เสริม)
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 mt-12">
+        <div class="max-w-6xl mx-auto px-4 text-center text-slate-500 text-xs md:text-sm">
+            <p>เอกสารประกอบการอบรมเชิงปฏิบัติการ: การใช้ AI ช่วยออกแบบ Use Case การใช้ Gemini สำหรับอาจารย์มหาวิทยาลัย</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Tabs and Copy Function -->
+    <script>
+        function switchTab(tabId) {
+            // Hide all contents
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.add('hidden');
+            });
+            // Remove active state from all buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('tab-active');
+                btn.classList.add('text-slate-600');
+            });
+
+            // Show selected content and activate button
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            const activeBtn = document.getElementById('btn-' + tabId);
+            activeBtn.classList.add('tab-active');
+            activeBtn.classList.remove('text-slate-600');
+        }
+
+        function copyPrompt(elementId, btnElement) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = btnElement.innerHTML;
+                btnElement.innerHTML = '✅ คัดลอกแล้ว!';
+                btnElement.classList.replace('bg-blue-600', 'bg-emerald-600');
+                btnElement.classList.replace('hover:bg-blue-500', 'hover:bg-emerald-500');
+                
+                setTimeout(() => {
+                    btnElement.innerHTML = originalText;
+                    btnElement.classList.replace('bg-emerald-600', 'bg-blue-600');
+                    btnElement.classList.replace('hover:bg-emerald-500', 'hover:bg-blue-500');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
